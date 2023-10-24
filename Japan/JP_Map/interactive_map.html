@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Map -- Developed by twreporter Data Team</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script src="leaflet.polylineDecorator.js"></script>
+    <style>
+
+        #container {
+            display: flex;
+        }
+        #controls {
+            flex: 1;
+        }
+        #map {
+            flex: 3;
+            height: 1080px;
+        }
+        
+
+    </style>
+</head>
+<body>
+
+
+<div id="container">
+    <div id="controls">
+        <h3>Select All</h3>
+<input type="checkbox" id="selectAll" checked> Select/Deselect All<br>
+
+
+        <!-- Your checkboxes will go here -->
+        <h3>Filter by Version</h3>
+        <input type="checkbox" id="old" checked> Old<br>
+        <input type="checkbox" id="new" checked> New<br>
+        <input type="checkbox" id="sum" checked> Sum<br>
+        
+        <h3>Filter by Data</h3>
+        <input type="checkbox" id="ship" checked> Ship<br>
+        <input type="checkbox" id="flight" checked> Flight<br>
+        
+        <h3>Filter by Country</h3>
+        <input type="checkbox" id="china" checked> China<br>
+        <input type="checkbox" id="russia" checked> Russia<br>
+        <input type="checkbox" id="both" checked> Both<br>
+        
+        <h3>Filter by Unique Labels</h3>
+        <!-- Unique labels checkboxes will be populated here by JavaScript -->
+    </div>
+
+    <div id="map">
+        <!-- Your map will go here -->
+    </div>
+</div>
+
+
+<!-- <div id="info">Hover over a feature</div> -->
+<div id="info-box" style="position: absolute; top: 10px; right: 10px; z-index: 1000; background: rgb(215, 215, 215); padding: 10px; width: 50%;">
+    <strong>DETAILS：</strong><br><span id="info"></span>
+</div>
+
+
+
+<script>
+    // Define the updateMap function
+
+    let map;  // Declare map as a global variable
+let frontendData;  // Declare frontendData as a global variable
+
+const controlsDiv = document.getElementById('controls')
+
+
+
+
+const updateMap = () => {
+    // Clear existing layers
+    map.eachLayer(layer => {
+        if (layer !== map._layers[Object.keys(map._layers)[0]]) {
+            map.removeLayer(layer);
+        }
+    });
+
+    console.log("now")
+    console.log(frontendData)
+    // Add layers based on filters
+    frontendData.forEach(feature => {
+        const { geojson, country, version, data, unique_labels, shape } = feature;
+        
+        const countryCheckbox = document.getElementById(country);
+        const versionCheckbox = document.getElementById(version);
+        const dataCheckbox = document.getElementById(data);
+        
+        if (
+            countryCheckbox && countryCheckbox.checked &&
+            versionCheckbox && versionCheckbox.checked &&
+            dataCheckbox && dataCheckbox.checked &&
+            (Array.isArray(unique_labels) && unique_labels.some(label => {
+                const labelCheckbox = document.getElementById(label);
+                return labelCheckbox && labelCheckbox.checked;
+            }))
+        ) {
+
+            const geojsonFeature = {
+                type: "Feature",
+                geometry: geojson,
+                properties: {
+                data: feature  // 將整個 feature 對象存儲在 properties 中
+                }
+            };
+
+            // 定義 geoJSONLayer 變數
+  const geoJSONLayer = L.geoJSON(geojsonFeature, {
+    style: getFeatureStyle,
+    onEachFeature: onEachFeature
+  }).addTo(map);
+
+
+  
+  
+
+
+    geoJSONLayer.eachLayer(function(layer) {
+        console.log("here")
+        console.log(geojsonFeature)
+
+        //ship
+        if (geojsonFeature.properties.data.shape === 'arrow' && geojsonFeature.properties.data.data === 'ship' &&(geojsonFeature.geometry.type === 'LineString' || geojsonFeature.geometry.type === 'MultiLineString')) {
+    
+            L.polylineDecorator(layer, {
+        patterns: [
+            { offset: '100%', repeat: 0, symbol: L.Symbol.arrowHead({pixelSize: 5, pathOptions: {stroke: true, color:'rgba(0, 0, 255, 1)'}}) }
+        ]
+
+
+    }
+    
+    ).addTo(map);
+        }
+
+        //flight
+        if (geojsonFeature.properties.data.shape === 'arrow' && geojsonFeature.properties.data.data === 'flight' &&(geojsonFeature.geometry.type === 'LineString' || geojsonFeature.geometry.type === 'MultiLineString')) {
+    
+    L.polylineDecorator(layer, {
+patterns: [
+    { offset: '100%', repeat: 0, symbol: L.Symbol.arrowHead({pixelSize: 5, pathOptions: {stroke: true, color:'rgba(255, 0, 0, 1)'}}) }
+]
+
+
+}
+
+).addTo(map);
+}
+
+
+
+
+
+
+        if (geojsonFeature.properties.data.shape === 'bidirectional-arrow' &&(geojsonFeature.geometry.type === 'LineString' || geojsonFeature.geometry.type === 'MultiLineString')) {
+    
+    L.polylineDecorator(layer, {
+
+
+        patterns: [
+        { offset: '0%', repeat: 0, symbol: L.Symbol.arrowHead({ pixelSize: 5, pathOptions: { fillOpacity: 1, weight: 0, color: 'rgba(255, 0, 0, 1)' } 
+ 
+            }) },
+        { offset: '100%', repeat: 0, symbol: L.Symbol.arrowHead({ pixelSize: 5, pathOptions: { fillOpacity: 1, weight: 0,color: 'rgba(255, 0, 0, 1)' } }) }
+    ]
+    
+        }
+        ).addTo(map);
+    }
+});
+
+
+
+
+
+
+        } else {
+            // console.log("進入其他狀況");
+        }
+    });
+};
+
+
+
+
+
+
+
+
+
+
+fetch('frontend_data.json')
+.then(response => response.json())
+.then(data => {
+    frontendData = data.map_features.map(feature => {
+    if (typeof feature.unique_labels === 'string') {
+        try {
+            // Replace single quotes with double quotes
+            const correctedString = feature.unique_labels.replace(/'/g, '"');
+            feature.unique_labels = JSON.parse(correctedString);
+        } catch (e) {
+            console.error('Error parsing unique_labels:', e);
+        }
+    }
+    return feature;
+});
+
+// Collect all unique labels from all features into a single array
+const allUniqueLabels = [];
+frontendData.forEach(feature => {
+    if (Array.isArray(feature.unique_labels)) {
+        feature.unique_labels.forEach(label => {
+            if (!allUniqueLabels.includes(label)) {
+                allUniqueLabels.push(label);
+            }
+        });
+    }
+});
+
+
+
+
+// Now you can loop through all unique labels
+allUniqueLabels.forEach(label => {
+    // your code here
+    const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = label;
+            checkbox.checked = true;
+            checkbox.addEventListener('change', updateMap);
+
+
+            controlsDiv.appendChild(checkbox);
+            
+            const labelElement = document.createElement('label');
+            labelElement.htmlFor = label;
+
+
+            labelElement.appendChild(document.createTextNode(' ' + label));
+            controlsDiv.appendChild(labelElement);
+            
+            controlsDiv.appendChild(document.createElement('br'));
+});
+
+
+
+
+
+    // Initialize the global map variable
+    map = L.map('map').setView([23.6978, 120.9605], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // ... attach updateMap function to checkboxes ...
+    // Step 3: Attach updateMap function to other checkboxes
+    ['old', 'new', 'sum', 'ship', 'flight', 'china', 'russia', 'both'].forEach(id => {
+            document.getElementById(id).addEventListener('change', updateMap);
+        });
+
+    updateMap();  // Call the updateMap function
+
+});
+
+
+
+
+
+function onEachFeature(feature, layer) {
+  // 檢查 properties 和 data 是否存在
+  if (feature.properties && feature.properties.data) {
+    const featureData = feature.properties.data;
+
+    // 在 mouseover 上更新info
+    layer.on('mouseover', function(e) {
+      const info = `
+        <strong>Version:</strong> ${featureData.version}<br>
+        <strong>Country:</strong> ${featureData.country}<br>
+        <strong>Data:</strong> ${featureData.data}<br>
+        <strong>File:</strong> ${featureData.file_name}<br>
+        <strong>Content:</strong> ${featureData.id_content}
+      `;
+      document.getElementById('info').innerHTML = info;
+    });
+
+    // 在 mouseout 上清除info
+    layer.on('mouseout', function(e) {
+      document.getElementById('info').innerHTML = '';
+    });
+
+     // 彈窗內容
+     const popupContent = `
+      <strong>Version:</strong> ${featureData.version}<br>
+      <strong>Country:</strong> ${featureData.country}<br>
+      <strong>Data:</strong> ${featureData.data}<br>
+      <strong>Unique Labels:</strong> ${featureData.unique_labels.join(', ')}<br>
+      <strong>Content:</strong> ${featureData.id_content}<br>
+        <strong>Source:</strong><a href="${featureData.urls}" target="_blank"> ${featureData.urls}</a><br>
+        <strong>File:</strong> ${featureData.file_name}<br>
+        <strong>Info:</strong> ${featureData.first_page_content}
+    `;
+
+    // 綁定彈窗
+    layer.bindPopup(popupContent);
+
+  }
+}
+
+
+
+
+// 函數用於獲取特性的樣式
+function getFeatureStyle(feature) {
+  if (feature.properties.data.data === 'ship') {
+    return { color: 'rgba(0, 0, 255, 0.5)' };  // 如果 data 等於 'ship'，則返回藍色
+  } else if (feature.properties.data.data === 'flight') {
+    return { color: 'rgba(255, 0, 0, 0.5)' };  // 如果 data 等於 'flight'，則返回黃色
+  } else {
+    return { color: 'gray' };  // 其他情況返回灰色
+  }
+}
+
+document.getElementById("selectAll").addEventListener("click", function() {
+    const checkboxes = document.querySelectorAll("#controls input[type='checkbox']");
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = this.checked;
+    });
+    updateMap(); // 重新更新地圖
+});
+
+
+
+</script>
+
+</body>
+</html>

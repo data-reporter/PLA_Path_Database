@@ -7,8 +7,11 @@
 資料範圍：2022/08/01至2023/08/31
 
 這裡的檔案包含：
-- jp_data_cleaned.csv：包含所有我們爬梳的報告，將軌跡圖資化的成果。
-- jp_data_cleaned.geojson: 檔案內容與csv一致，但更便於使用者匯入GIS軟體。
+- **jp_data_cleaned.csv**: 包含所有我們爬梳的報告，將軌跡圖資化的成果。
+- **jp_data_cleaned.geojson**: 檔案內容與csv一致，但更便於使用者匯入GIS軟體。
+- **Files_PLA_Flight**: 包含與共機活動有關的原始報告pdf檔，以及經《報導者》批量轉存的地圖png檔。
+- **Files_PLA_Ship**: 同上，為共艦活動報告資料。
+- **JP_Map**: 可透過儀表板探索資料。
 
 
 ## 欄位意義：

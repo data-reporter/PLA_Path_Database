@@ -5,7 +5,7 @@
 ## 專案說明
 - 本資料集由[《報導者》](https://www.twreporter.org/)數據新聞小組整理而成，原始資料取自[台灣國防部即時軍事動態頁面](https://www.mnd.gov.tw/PublishTable.aspx?Types=%E5%8D%B3%E6%99%82%E8%BB%8D%E4%BA%8B%E5%8B%95%E6%85%8B&title=%E5%9C%8B%E9%98%B2%E6%B6%88%E6%81%AF)、[日本防衛省統合幕僚監部新聞稿](https://www.mod.go.jp/js/press/)。
 - 本資料使用於報導者數位專題[【圖解】解放軍如何進逼第一島鏈：台海衝突下牽動的美日軍事布局](https://www.twreporter.org/a/taiwanyuji-first-island-chain-military-movement-multimedia)。
-- 數據詳細處理方法論可見[Medium技術筆記〈AI、Python與手工業，我們如何處理台灣+日本超過400張共軍軌跡圖？〉](http://www.medium.com/)
+- 數據詳細處理方法論可見[Medium技術筆記〈AI、Python與手工業，我們如何處理台灣+日本超過400張共軍軌跡圖？〉](https://medium.com/twreporter/13b10f9a1c81)
 
 ## 研究方法概述
 

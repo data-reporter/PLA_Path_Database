@@ -2,7 +2,7 @@
 
 2023.10.25 更新
 
-本資料集由報導者數據小組爬取[日本防衛省統合幕僚監部新聞稿](https://www.mod.go.jp/js/press/)整理而成，用於報導者專題[【圖解】解放軍如何進逼第一島鏈：台海衝突下牽動的美日軍事布局](https://github.com/data-reporter/PLA_Path_Database/tree/main/Taiwan#:~:text=%E3%80%90%E5%9C%96%E8%A7%A3%E3%80%91%E8%A7%A3%E6%94%BE%E8%BB%8D%E5%A6%82%E4%BD%95%E9%80%B2%E9%80%BC%E7%AC%AC%E4%B8%80%E5%B3%B6%E9%8F%88%EF%BC%9A%E5%8F%B0%E6%B5%B7%E8%A1%9D%E7%AA%81%E4%B8%8B%E7%89%BD%E5%8B%95%E7%9A%84%E7%BE%8E%E6%97%A5%E8%BB%8D%E4%BA%8B%E5%B8%83%E5%B1%80)。數據詳細處理過程可見Medium。
+本資料集由報導者數據小組爬取[日本防衛省統合幕僚監部新聞稿](https://www.mod.go.jp/js/press/)整理而成，用於報導者專題[【圖解】解放軍如何進逼第一島鏈：台海衝突下牽動的美日軍事布局](https://github.com/data-reporter/PLA_Path_Database/tree/main/Taiwan#:~:text=%E3%80%90%E5%9C%96%E8%A7%A3%E3%80%91%E8%A7%A3%E6%94%BE%E8%BB%8D%E5%A6%82%E4%BD%95%E9%80%B2%E9%80%BC%E7%AC%AC%E4%B8%80%E5%B3%B6%E9%8F%88%EF%BC%9A%E5%8F%B0%E6%B5%B7%E8%A1%9D%E7%AA%81%E4%B8%8B%E7%89%BD%E5%8B%95%E7%9A%84%E7%BE%8E%E6%97%A5%E8%BB%8D%E4%BA%8B%E5%B8%83%E5%B1%80)。數據詳細處理過程可見[Medium](https://medium.com/twreporter/13b10f9a1c81)。
 
 資料範圍：2022/08/01至2023/08/31
 

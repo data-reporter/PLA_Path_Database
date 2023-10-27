@@ -1,5 +1,5 @@
 # Interactive Map
-透過此介面，你可以在前端網頁探索資料；資料範圍與前述日本資料集一致。
+透過此介面，你可以在[前端網頁](https://data-reporter.github.io/PLA_Path_Database/Japan/JP_Map/interactive_map.html)探索資料；資料範圍與前述日本資料集一致。
 
 ## 建議使用方式：
 - 進入儀表板後，將version的old取消勾選，避免資料重複繪製。

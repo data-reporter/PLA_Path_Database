@@ -3,11 +3,21 @@
 
 本資料集由報導者數據小組爬取<a href="https://www.mnd.gov.tw/PublishTable.aspx?Types=%E5%8D%B3%E6%99%82%E8%BB%8D%E4%BA%8B%E5%8B%95%E6%85%8B&title=%E5%9C%8B%E9%98%B2%E6%B6%88%E6%81%AF">國防部即時軍事動態頁面</a>整理而成，用於報導者專題<a href="https://www.mnd.gov.tw/PublishTable.aspx?Types=%E5%8D%B3%E6%99%82%E8%BB%8D%E4%BA%8B%E5%8B%95%E6%85%8B&title=%E5%9C%8B%E9%98%B2%E6%B6%88%E6%81%AF](https://www.twreporter.org/a/taiwanyuji-first-island-chain-military-movement-multimedia)https://www.twreporter.org/a/taiwanyuji-first-island-chain-military-movement-multimedia">【圖解】解放軍如何進逼第一島鏈：台海衝突下牽動的美日軍事布局</a>。數據詳細處理過程可見[Medium](https://medium.com/twreporter/13b10f9a1c81)。
 
-- 資料範圍：2022/08/01至2023/09/15
-- Daily_GeoJson：每日共機軌跡（地理圖資檔），檔名為：民國年-月份-日期（1911+YYY -MM -DD）
-- data：每日共機機型、架次資料
+- 資料範圍：2022/08/01至2024/07/31
+
+以3個時期分類每日共機軌跡（地理圖資檔）資料：
+- Daily_Geojson_20220801-20230915：《報導者》2023年10月島鏈專題出刊時使用之資料集；2024年9月修正錯誤；內文亂碼對應aircraft_zh_type.csv；檔名為：民國年-月份-日期（1911+YYY -MM -DD）。
+- Daily_Geojson_20230918-20240115：截至2024年1月15日改版前資料集
+- Daily_Geojson_20240116-20240731：2024年1月16日改版以後之資料集，更新至2024年7月31日
+
+其他：
 - aircraft_zh_type：本資料處理初期出現中文編碼轉換問題，因此製作中文對照表將資料復原。原始資料出現部分機型名稱不一致的狀況，本表也可用於參照。
-- Files_PLA_Flight：包含國防部原版地圖（Original_Images），其中2022/08/05前的地圖最初是儲存在pdf檔中，報導者已將其轉為jpg檔；我們也提供經後製處理地圖（Processed_Images），包含切除邊界、右上角加上日期戳記、尺寸統一等。需注意的是，資料夾包含2020年9月至2023年8月所有圖檔，但本專案僅將一部分資料轉換為地理圖資。
+- Files_PLA_Flight：
+（1）包含國防部原版地圖（Original_Images），收錄日期範圍為2020/09/18至2024/01/15，其中2022/08/05前的地圖最初是儲存在pdf檔中，報導者已將其轉為jpg檔。
+（2）Original_Images_version_2收錄2024/01/16國防部改版後之示意圖。
+（3）我們也提供經後製處理地圖（Processed_Images），包含切除邊界、右上角加上日期戳記、尺寸統一等；收錄範圍為2022/08/01-2023/09/15
+（4）需注意的是，資料夾包含2020年9月至2024年1月15日所有圖檔，但本專案僅將一部分資料轉換為地理圖資（2022/07/31以前未轉換）。
+
 
 註1：此處資料僅限國防部釋出的軌跡圖資，部分共機共艦無逾越海峽中線及西南空域，因此未納入本資料集。<br>
 註2：2022年12月18日6時至19日6時，共機曾逾越中線及進入台灣周邊空域，惟<a href="https://www.mnd.gov.tw/Publish.aspx?p=80819">官方</a>未提供圖檔，故本資料集未收錄相關軌跡。
